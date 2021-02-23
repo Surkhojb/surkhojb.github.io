@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Hello world</title>
+    <link>https://surkhojb.github.io/post/</link>
+    <description>Recent content in Posts on Hello world</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sun, 21 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://surkhojb.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Have a pencil close</title>
+      <link>https://surkhojb.github.io/post/pencil_than_memory/</link>
+      <pubDate>Sun, 21 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://surkhojb.github.io/post/pencil_than_memory/</guid>
+      <description>Today I am going to talk about order, because yes, the order is something very important in life and also in software development.
+Sometimes when I forgot something or I don’t remember where I can find it, one of my dad’s quote comes to my mind: &amp;ldquo;Is better a short pencil than a big memory” ( This is literally translated from Spanish.), The meaning of it is that is better to take notes than try to remember everything, because sooner or later we will forget about it.</description>
+    </item>
+    
+    <item>
+      <title>A perfect cocktail</title>
+      <link>https://surkhojb.github.io/post/kt_wallpapers_firebase/</link>
+      <pubDate>Sun, 14 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://surkhojb.github.io/post/kt_wallpapers_firebase/</guid>
+      <description>Since I&amp;rsquo;ve been playing with Github Actions, I started to enjoy using it to build anything, so I thought about using it with Android and Firebase. Because you know, Android and Firebase always are a great mix, but now we will add a new ingredient to create a great cocktail.
+Our cocktail will help us to deploy an apk file for our tester team, instead of doing it manually we are going to add our magic ingredient: a Github Action workflow!</description>
+    </item>
+    
+    <item>
+      <title>Github Actions to rescue</title>
+      <link>https://surkhojb.github.io/post/site_gb_action/</link>
+      <pubDate>Sat, 13 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://surkhojb.github.io/post/site_gb_action/</guid>
+      <description>After creating my website with Hugo and Github Pages I found that every time I wanted to make a change on the website and build the website I had to generate the static website running hugo command. So I&amp;rsquo;ve been thinking How could I automate this process?
+I&amp;rsquo;ve been thinking to use something like CI, so I&amp;rsquo;ve been looking for different CI tools to helping me to solve it, and finally, I decided to make use of Github Actions for building the website.</description>
+    </item>
+    
+    <item>
+      <title>Welcome to my website</title>
+      <link>https://surkhojb.github.io/post/hello_world/</link>
+      <pubDate>Fri, 12 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://surkhojb.github.io/post/hello_world/</guid>
+      <description>This is my first post on my website.
+I&amp;rsquo;ve been thinking about create a blog or website to post my projects and share my thoughts and concerns about my journey as Android developer.
+I wanted to find a new way to push myself and keep learning because that is one of the best qualities that a developer can own.
+So creating this website I hope I can help others developers to keep learning and keep their motivation to learn and grow up.</description>
+    </item>
+    
+  </channel>
+</rss>

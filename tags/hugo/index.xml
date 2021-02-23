@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo on Hello world</title>
+    <link>https://surkhojb.github.io/tags/hugo/</link>
+    <description>Recent content in hugo on Hello world</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 13 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://surkhojb.github.io/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Github Actions to rescue</title>
+      <link>https://surkhojb.github.io/post/site_gb_action/</link>
+      <pubDate>Sat, 13 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://surkhojb.github.io/post/site_gb_action/</guid>
+      <description>After creating my website with Hugo and Github Pages I found that every time I wanted to make a change on the website and build the website I had to generate the static website running hugo command. So I&amp;rsquo;ve been thinking How could I automate this process?
+I&amp;rsquo;ve been thinking to use something like CI, so I&amp;rsquo;ve been looking for different CI tools to helping me to solve it, and finally, I decided to make use of Github Actions for building the website.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Juanjo Berenguer">
+    <meta name="description" content="https://surkhojb.github.io/">
+    <meta name="keywords" content="android,developer,portfolio">
+
+    <meta property="og:site_name" content="Hello world">
+    <meta property="og:title" content="
+  Github Actions to rescue - Hello world
+">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://surkhojb.github.io/post/site_gb_action/">
+    <meta property="og:image" content="https://surkhojb.github.io/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://surkhojb.github.io/post/site_gb_action/">
+    <meta name="twitter:image" content="https://surkhojb.github.io/">
+
+    <base href="https://surkhojb.github.io/post/site_gb_action/">
+    <title>
+  Github Actions to rescue - Hello world
+</title>
+
+    <link rel="canonical" href="https://surkhojb.github.io/post/site_gb_action/">
+    
+    <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
+    <link rel="stylesheet" href="/css/normalize.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    
+      <link rel="alternate" href="https://surkhojb.github.io/index.xml" type="application/rss+xml" title="Hello world">
+      <link href="https://surkhojb.github.io/index.xml" rel="feed" type="application/rss+xml" title="Hello world" />
+    
+
+    <meta name="generator" content="Hugo 0.80.0" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">Hello world</a>
+    <input type="checkbox" id="menu-control"/>
+    <label class="menu-mobile  float-right " for="menu-control">
+      <span class="btn-mobile  float-right ">&#9776;</span>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://surkhojb.github.io/">Home</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://surkhojb.github.io/post/">Posts</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://surkhojb.github.io/about/">About</a>
+            </li>
+          
+        
+        
+      </ul>
+    </label>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>Github Actions to rescue</h1>
+    </header>
+
+    <p>After creating my website with <a href="https://gohugo.io">Hugo</a> and <a href="https://pages.github.com/">Github Pages</a> I found that every time I wanted to make a change on the website and build the website I had to generate the static website running <em><strong>hugo</strong></em> command. So I&rsquo;ve been thinking <em><strong>How could I automate this process?</strong></em></p>
+<p>I&rsquo;ve been thinking to use something like CI, so I&rsquo;ve been looking for different CI tools to helping me to solve it, and finally, I decided to make use of <a href="https://docs.github.com/en/actions">Github Actions</a> for building the website. I created a workflow for building the static website and running it each day at the end of the day. It will get the last changes committed during the day and it&rsquo;ll build the website.</p>
+<h2 id="creating-a-new-workflow-for-github-actions">Creating a new workflow for Github Actions</h2>
+<ol>
+<li>We need a folder to save our workflows. Let&rsquo;s create it:</li>
+</ol>
+<pre><code>mkdir .github/workflows
+</code></pre><ol start="2">
+<li>Create our <a href="https://github.com/Surkhojb/surkhojb.github.io/blob/master/.github/workflows/hugo_build.yml"><strong>hugo_build.yml</strong></a> file for bulding our website:</li>
+</ol>
+<pre><code>name: Hugo Build &amp; Deploy - Private to Public
+
+# Everytime a push it's executed on master branch it
+# will execute this hugo build action
+on:
+  schedule:
+  - cron: &quot;0 0 * * *&quot; # At the end of everyday
+  
+  workflow_dispatch:  
+
+  # Workflow
+jobs:
+  # This workflow contains a single job called &quot;build&quot;
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Check Out Repository
+    - name: Checkout
+      uses: actions/checkout@v2.3.1 
+      with:
+        persist-credentials: false
+    # Setup Hugo
+    - name: Hugo setup
+      uses: peaceiris/actions-hugo@v2.4.12
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      with:
+        hugo-version: 'latest'
+        extended: false
+    # Clean docs directory before deploy web with last changes
+    - name: Clean site
+      run: |
+        if [ -d &quot;docs&quot; ]; then
+        rm -rf docs/*
+        fi
+
+    # Runs Hugo to build the static Site
+    - name: Run Hugo
+      run: hugo
+
+    # Commiting changes to repo
+    - name: Deploying    
+      run: |
+        git config user.name &quot;${GITHUB_ACTOR}&quot;
+        git config user.email &quot;${GITHUB_ACTOR}@users.noreply.github.com&quot;
+        git add .
+        git commit -am &quot;Deployed with ${GITHUB_WORKFLOW}&quot;
+        git push --all -f https://${{ secrets.ACCESS_TOKEN }}@YOUR_REPOSITORY.git
+</code></pre><h2 id="breaking-file-step-by-step">Breaking file step by step</h2>
+<ol>
+<li>First we need a name for our building and in this case, and configure when it will be executed.I decided to run this workflow at the end of everyday.</li>
+</ol>
+<pre><code>name: Hugo Build &amp; Deploy - Private to Public
+
+on:
+  schedule:
+  - cron: &quot;0 0 * * *&quot; # At the end of everyday
+
+workflow_dispatch:  ## It allows us to run it on the website.
+
+</code></pre><ol start="2">
+<li>Configure the job:</li>
+</ol>
+<pre><code># Workflow
+jobs:
+  # This workflow contains a single job called &quot;build&quot;
+  build:
+    runs-on: ubuntu-latest
+</code></pre><ol start="3">
+<li>And add the steps that our workflow has to do until deploying the website:</li>
+</ol>
+<ul>
+<li>Checkout the repository:</li>
+</ul>
+<pre><code> # Check Out Repository
+    - name: Checkout
+      uses: actions/checkout@v2.3.1 
+      with:
+        persist-credentials: false
+</code></pre><ul>
+<li>Setting up Hugo with the latest version available:</li>
+</ul>
+<pre><code># Setup Hugo
+    - name: Hugo setup
+      uses: peaceiris/actions-hugo@v2.4.12
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      with:
+        hugo-version: 'latest'
+        extended: false
+</code></pre><ul>
+<li>Removing the old static website locate at our docs folder:</li>
+</ul>
+<pre><code># Clean docs directory before deploy web with last changes
+    - name: Clean site
+      run: |
+        if [ -d &quot;docs&quot; ]; then
+        rm -rf docs/*
+        fi
+</code></pre><ul>
+<li>Executing Hugo to build the static website:</li>
+</ul>
+<pre><code># Runs Hugo to build the static Site
+    - name: Run Hugo
+      run: hugo
+</code></pre><ul>
+<li>Finally adding and committing our changes and pushing our docs folder updated</li>
+</ul>
+<pre><code># Commiting changes to repo
+    - name: Deploying    
+      run: |
+        git config user.name &quot;${GITHUB_ACTOR}&quot;
+        git config user.email &quot;${GITHUB_ACTOR}@users.noreply.github.com&quot;
+        git add .
+        git commit -am &quot;Deployed with ${GITHUB_WORKFLOW}&quot;
+        git push --all -f https://${{ secrets.ACCESS_TOKEN }}@YOUR_REPOSITORY.git
+</code></pre><p>PD: Recipe of today: <a href="https://www.simplyrecipes.com/recipes/spaghetti_alla_carbonara/">Spaghetti Carbonara</a></p>
+
+  </article>
+</section>
+
+
+      </div>
+      
+    </main>
+
+    
+
+  <script src="/js/app.js"></script>
+  
+  </body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="author" content="Juanjo Berenguer">
+    <meta name="description" content="https://surkhojb.github.io/">
+    <meta name="keywords" content="android,developer,portfolio">
+
+    <meta property="og:site_name" content="Hello world">
+    <meta property="og:title" content="
+  A perfect cocktail - Hello world
+">
+    <meta property="og:description" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://surkhojb.github.io/post/kt_wallpapers_firebase/">
+    <meta property="og:image" content="https://surkhojb.github.io/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="https://surkhojb.github.io/post/kt_wallpapers_firebase/">
+    <meta name="twitter:image" content="https://surkhojb.github.io/">
+
+    <base href="https://surkhojb.github.io/post/kt_wallpapers_firebase/">
+    <title>
+  A perfect cocktail - Hello world
+</title>
+
+    <link rel="canonical" href="https://surkhojb.github.io/post/kt_wallpapers_firebase/">
+    
+    <link  rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700">
+    <link rel="stylesheet" href="/css/normalize.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+
+    
+
+    
+
+    <link rel="icon" type="image/png" href="/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/images/favicon-16x16.png" sizes="16x16">
+
+    
+      <link rel="alternate" href="https://surkhojb.github.io/index.xml" type="application/rss+xml" title="Hello world">
+      <link href="https://surkhojb.github.io/index.xml" rel="feed" type="application/rss+xml" title="Hello world" />
+    
+
+    <meta name="generator" content="Hugo 0.80.0" />
+  </head>
+
+  <body class="">
+    <main class="wrapper">
+      <nav class="navigation">
+  <section class="container">
+    <a class="navigation-title" href="/">Hello world</a>
+    <input type="checkbox" id="menu-control"/>
+    <label class="menu-mobile  float-right " for="menu-control">
+      <span class="btn-mobile  float-right ">&#9776;</span>
+      <ul class="navigation-list">
+        
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://surkhojb.github.io/">Home</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://surkhojb.github.io/post/">Posts</a>
+            </li>
+          
+            <li class="navigation-item  align-center ">
+              <a class="navigation-link" href="https://surkhojb.github.io/about/">About</a>
+            </li>
+          
+        
+        
+      </ul>
+    </label>
+  </section>
+</nav>
+
+
+      <div class="content">
+        
+  <section class="container page">
+  <article>
+    <header>
+      <h1>A perfect cocktail</h1>
+    </header>
+
+    <p>Since I&rsquo;ve been playing with Github Actions, I started to enjoy using it to build anything, so I thought about using it with Android and Firebase. Because you know, Android and Firebase always are a great mix, but now we will add a new ingredient to create a great cocktail.</p>
+<p>Our cocktail will help us to deploy an apk file for our tester team, instead of doing it manually we are going to add our <em><strong>magic</strong></em> ingredient: a Github Action workflow!.</p>
+<h4 id="what-will-we-need-to-create-our-cocktail">What will we need to create our cocktail?</h4>
+<ul>
+<li>Android App: In my case I will use <a href="https://github.com/Surkhojb/KTWallpapers">one of mine</a></li>
+<li>Firebase Project: We need to <a href="https://firebase.google.com/docs/android/setup#console">configure it</a></li>
+<li>Github Action <a href="https://github.com/Surkhojb/KTWallpapers/blob/main/.github/workflows/android_testers_deploy.yml">workflow</a></li>
+</ul>
+<h4 id="1-configuring-firebase-and-firebase-cli">1. Configuring Firebase and Firebase CLI.</h4>
+<p>Following the instructions on <a href="https://firebase.google.com/docs/android/setup#console">Firebase Documentation</a>, we need to modify our build.gradle files for our project and our app</p>
+<ul>
+<li>Adding Google Play services to our build.gradle project file:</li>
+</ul>
+<p><img src="/images/firebase_04.png" alt="image alt text"></p>
+<ul>
+<li>Adding plugin to our build.gradle app file:</li>
+</ul>
+<p><img src="/images/firebase_05.png" alt="image alt text"></p>
+<ul>
+<li>Adding firebase-bom dependency in our gradle file:</li>
+</ul>
+<p><img src="/images/firebase_06.png" alt="image alt text"></p>
+<ul>
+<li>Creating a new project on <a href="https://console.firebase.google.com/">Firebase Console</a>, we need to add our app package and an optional name:</li>
+</ul>
+<p><img src="/images/firebase_01.png" alt="image alt text"></p>
+<ul>
+<li>Download google-services.json file and add it inside the app folder and sync our gradle:</li>
+</ul>
+<p><img src="/images/firebase_02.png" alt="image alt text"></p>
+<p><img src="/images/firebase_03.png" alt="image alt text"></p>
+<p>After doing this we will go to App Distribution section in our Firebase Console and adding a new email and creating a new group.
+<img src="/images/app_distribution_01.png" alt="image alt text">
+<img src="/images/app_distribution_02.png" alt="image alt text"></p>
+<p>Now is time to create a token to deploy apk files from Github Actions, we have to generate this token using <a href="https://firebase.google.com/docs/cli">Firebase CLI</a>.</p>
+<ul>
+<li>Download and execute Firebase CLI tool:</li>
+</ul>
+<p><img src="/images/firebase_cli_01.png" alt="image alt text"></p>
+<ul>
+<li>We need to execute <em><strong>firebase login:ci</strong></em> and after login with our email it will give us a CLI Token:</li>
+</ul>
+<p><img src="/images/firebase_cli_02.png" alt="image alt text"></p>
+<ul>
+<li>We also need Firebase App Id, we can get our app id, running the following commands:</li>
+</ul>
+<pre><code>firebase:list project
+firebase apps:list --project your_projectid
+</code></pre><p><img src="/images/firebase_cli_03.png" alt="image alt text"></p>
+<h3 id="2-configuring-our-github-repository">2. Configuring our Github repository</h3>
+<p>Now we need to go to Settings -&gt; Secrets and add two new repository secret: FIREBASE_APP_ID with our Firebase App id and FIREBAE_TOKEN with our Firebase CLI token:</p>
+<p><img src="/images/repository_01.png" alt="image alt text"></p>
+<h3 id="3-creating-workflow-file">3. Creating workflow file</h3>
+<p>Now it&rsquo;s time to create or workflow file inside our app project, create a folder .github/workflows and create our new yml file:</p>
+<p><img src="/images/android_01.png" alt="image alt text"></p>
+<ul>
+<li>First we add a name and when it will be triggered:</li>
+</ul>
+<pre><code>name: Android Testers CI - Deployment to Firebase
+# Triggered every time master branch has a push.
+on:
+  push:
+    branches: main
+
+    workflow_dispatch:
+</code></pre><ul>
+<li>Second we will create our job, running on ubuntu machine:</li>
+</ul>
+<pre><code>build:
+
+    runs-on: ubuntu-latest
+
+</code></pre><ul>
+<li>Creating our steps: we want to checkout the repository, set up java, build a debug apk and deploy to Firebase</li>
+</ul>
+<pre><code>steps:
+      # Checkout Repo
+      - name: Checkout Repo
+        uses: actions/checkout@v1
+
+      # Setting up Java 1.8
+      - name: Setting Java JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      # Building debug apk
+      - name: Building Debug Apk
+        run: ./gradlew assembleDebug --stacktrace
+
+      # Deployment
+      - name: Deploy artifact to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: Testers
+          file: app/build/outputs/apk/debug/app-debug.apk
+</code></pre><ul>
+<li>At Deployment step we will need to add required parameters.
+<ul>
+<li><strong>appId</strong>: Reference to our Firebase App id</li>
+<li><strong>token</strong>: Reference to our Firebase CLI token</li>
+<li><strong>groups</strong>: Name of our Firebae App Distribution group.</li>
+<li><strong>file</strong>: Where our apk file will be located.</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-enjoying-our-cocktail">4. Enjoying our cocktail</h3>
+<p>Now after all this steps it&rsquo;s time to push our yml file and go to our Github repository and see how our workflow is running, after a success build, we will see our apk file uploaded at Firebase:</p>
+<p><img src="/images/repository_02.png" alt="image alt text"></p>
+<p><img src="/images/firebase_app.png" alt="image alt text"></p>
+<p>After doing all these steps, we created a great cocktail to deploy our versions without to much effort.</p>
+<p>Thanks for reading. Happy coding :smiley:!</p>
+<p>PD: Today&rsquo;s dish <a href="https://cafedelites.com/crispy-chicken-parmesan/">Chicken Parmesan</a></p>
+
+  </article>
+</section>
+
+
+      </div>
+      
+    </main>
+
+    
+
+  <script src="/js/app.js"></script>
+  
+  </body>
+</html>
